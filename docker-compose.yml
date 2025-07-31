@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17.5-alpine
+    container_name: urban_scope_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: urban_scope
+    ports:
+      - "5432:5432"
+    volumes:
+        - ~/Documents/postgres-data:/var/lib/postgresql/data
