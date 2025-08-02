@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'states',
     'municipalities',
-    'district'
+    'districts'
 ]
 
 MIDDLEWARE = [
