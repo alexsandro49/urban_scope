@@ -4,7 +4,7 @@ from states.models import State
 
 class Municipality(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    integration_id = models.IntegerField()
+    api_id = models.IntegerField()
     name = models.CharField()
     state_id = models.ForeignKey(State, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
