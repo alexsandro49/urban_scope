@@ -1,15 +1,17 @@
 import os
 import requests
+import gzip
+import ijson
 from dotenv import load_dotenv
 from states.models import State
 from municipalities.models import Municipality
 from districts.models import District
 
 
-def sanitize_data(data):
+def clear_data(data):
     clean_data = []
 
-    for element in data:
+    for element in ijson.items(data, "item"):
         if (
             element["municipio"] != None
             and element["municipio"]["microrregiao"] != None
@@ -20,6 +22,7 @@ def sanitize_data(data):
 
     return clean_data
 
+
 def update_database_data(data):
     states = []
     municipalities = []
@@ -29,7 +32,7 @@ def update_database_data(data):
     municipalities_id_saved = []
     districts_id_saved = []
 
-    for element in data:
+    for element in ijson.items(data, "item"):
         state_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
         municipality_id = element["municipio"]["id"]
         district_id = element["id"]
@@ -37,11 +40,11 @@ def update_database_data(data):
         if state_id not in states_id_saved:
             states.append(
                 State(
-                    api_id = state_id,
-                    name = element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
+                    api_id=state_id,
+                    name=element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
                         "nome"
                     ],
-                    acronym = element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
+                    acronym=element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
                         "sigla"
                     ],
                 )
@@ -51,20 +54,20 @@ def update_database_data(data):
         if municipality_id not in municipalities_id_saved:
             municipalities.append(
                 Municipality(
-                    api_id = municipality_id,
+                    api_id=municipality_id,
                     name=element["municipio"]["nome"],
-                    state_id = state_id,
+                    state_id=state_id,
                 )
             )
             municipalities_id_saved.append(municipality_id)
-            
+
         if district_id not in districts_id_saved:
             districts.append(
                 District(
-                    api_id = district_id,
-                    name= element["nome"],
-                    state_id = state_id,
-                    municipality_id = municipality_id,
+                    api_id=district_id,
+                    name=element["nome"],
+                    state_id=state_id,
+                    municipality_id=municipality_id,
                 )
             )
             districts_id_saved.append(district_id)
@@ -74,14 +77,14 @@ def update_database_data(data):
         update_conflicts=True,
         update_fields=["api_id", "name", "acronym"],
         unique_fields=["api_id"],
-    ) 
+    )
 
     Municipality.objects.bulk_create(
         municipalities,
         update_conflicts=True,
         update_fields=["api_id", "name", "state_id"],
         unique_fields=["api_id"],
-    ) 
+    )
 
     District.objects.bulk_create(
         districts,
@@ -90,11 +93,13 @@ def update_database_data(data):
         unique_fields=["api_id"],
     )
 
+
 def run():
     load_dotenv()
 
     API_URL = os.getenv("BASE_API_URL") + "distritos/"
-    result = requests.get(API_URL).json()
-    clean_data = sanitize_data(result)
+    response = requests.get(API_URL, stream=True, headers={"Accept-Encoding": "gzip"})
 
-    update_database_data(clean_data)
+    with gzip.GzipFile(fileobj=response.raw) as decompressed_data:
+        clean_data = clear_data(decompressed_data)
+        update_database_data(clean_data)
