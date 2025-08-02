@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('states', '0001_initial'),
+        ('states', '0002_alter_state_api_id'),
     ]
 
     operations = [
@@ -18,11 +18,11 @@ class Migration(migrations.Migration):
             name='Municipality',
             fields=[
                 ('uuid', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('integration_id', models.IntegerField()),
+                ('api_id', models.IntegerField()),
                 ('name', models.CharField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('state_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='states.state')),
+                ('state', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='states.state', to_field='api_id', db_column='state_id')),
             ],
             options={
                 'db_table': 'municipality_ibge',

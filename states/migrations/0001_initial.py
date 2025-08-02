@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='State',
             fields=[
                 ('uuid', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('integration_id', models.IntegerField()),
+                ('api_id', models.IntegerField()),
                 ('acronym', models.CharField()),
                 ('name', models.CharField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),

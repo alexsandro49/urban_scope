@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('states', '0002_rename_integration_id_state_api_id'),
+        ('states', '0001_initial'),
     ]
 
     operations = [

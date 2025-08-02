@@ -20,87 +20,68 @@ def sanitize_data(data):
 
     return clean_data
 
-
-def states_logic(data):
+def update_database_data(data):
     states = []
-    states_id = []
+    municipalities = []
+    districts = []
+
+    states_id_saved = []
+    municipalities_id_saved = []
+    districts_id_saved = []
 
     for element in data:
-        new_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
+        state_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
+        municipality_id = element["municipio"]["id"]
+        district_id = element["id"]
 
-        if new_id not in states_id:
+        if state_id not in states_id_saved:
             states.append(
                 State(
-                    api_id=new_id,
-                    name=element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
+                    api_id = state_id,
+                    name = element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
                         "nome"
                     ],
-                    acronym=element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
+                    acronym = element["municipio"]["microrregiao"]["mesorregiao"]["UF"][
                         "sigla"
                     ],
                 )
             )
-            states_id.append(new_id)
+            states_id_saved.append(state_id)
+
+        if municipality_id not in municipalities_id_saved:
+            municipalities.append(
+                Municipality(
+                    api_id = municipality_id,
+                    name=element["municipio"]["nome"],
+                    state_id = state_id,
+                )
+            )
+            municipalities_id_saved.append(municipality_id)
+            
+        if district_id not in districts_id_saved:
+            districts.append(
+                District(
+                    api_id = district_id,
+                    name= element["nome"],
+                    state_id = state_id,
+                    municipality_id = municipality_id,
+                )
+            )
+            districts_id_saved.append(district_id)
 
     State.objects.bulk_create(
         states,
         update_conflicts=True,
         update_fields=["api_id", "name", "acronym"],
         unique_fields=["api_id"],
-    )
-
-
-def municipalities_logic(data):
-    municipalities = []
-    municipalities_id = []
-
-    for element in data:
-        state_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
-        state = State.objects.get(api_id=state_id)
-
-        new_id = element["municipio"]["id"]
-
-        if new_id not in municipalities_id:
-            municipalities.append(
-                Municipality(
-                    api_id=new_id,
-                    name=element["municipio"]["nome"],
-                    state_id=state,
-                )
-            )
-            municipalities_id.append(new_id)
+    ) 
 
     Municipality.objects.bulk_create(
         municipalities,
         update_conflicts=True,
         update_fields=["api_id", "name", "state_id"],
         unique_fields=["api_id"],
-    )
-
-
-def districts_logic(data):
-    districts = []
-    districts_id = []
-
-    for element in data:
-        state_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
-        state = State.objects.get(api_id=state_id)
-
-        municipality_id = element["municipio"]["id"]
-        municipality = Municipality.objects.get(api_id=municipality_id)
-
-        new_id = element["id"]
-
-        if new_id not in districts_id:
-            districts.append(
-                District(
-                    api_id=new_id,
-                    name=element["nome"],
-                    state_id=state,
-                    municipality_id=municipality,
-                )
-            )
-            districts_id.append(new_id)
+    ) 
 
     District.objects.bulk_create(
         districts,
@@ -109,7 +90,6 @@ def districts_logic(data):
         unique_fields=["api_id"],
     )
 
-
 def run():
     load_dotenv()
 
@@ -117,6 +97,4 @@ def run():
     result = requests.get(API_URL).json()
     clean_data = sanitize_data(result)
 
-    states_logic(clean_data)
-    municipalities_logic(clean_data)
-    districts_logic(clean_data)
+    update_database_data(clean_data)

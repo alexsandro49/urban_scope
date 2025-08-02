@@ -6,7 +6,7 @@ class Municipality(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
     api_id = models.IntegerField(unique=True)
     name = models.CharField()
-    state_id = models.ForeignKey(State, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, to_field='api_id', db_column='state_id')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

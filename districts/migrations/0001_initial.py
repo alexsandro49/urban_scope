@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('municipalities', '0001_initial'),
-        ('states', '0001_initial'),
+        ('municipalities', '0002_alter_municipality_api_id'),
+        ('states', '0002_alter_state_api_id'),
     ]
 
     operations = [
@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('municipality_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='municipalities.municipality')),
-                ('state_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='states.state')),
+                ('municipality', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='municipalities.municipality', to_field='api_id', db_column='municipality_id')),
+                ('state', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='states.state', to_field='api_id', db_column='state_id')),
             ],
             options={
                 'db_table': 'district_ibge',
