@@ -5,7 +5,7 @@ from municipalities.models import Municipality
 
 class District(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    api_id = models.IntegerField()
+    api_id = models.IntegerField(unique=True)
     name = models.CharField()
     state_id = models.ForeignKey(State, on_delete=models.CASCADE)
     municipality_id = models.ForeignKey(Municipality, on_delete=models.CASCADE)
