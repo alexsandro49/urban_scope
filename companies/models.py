@@ -3,7 +3,7 @@ from django.db import models
 
 class Company(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    basic_cpnj = models.CharField(unique=True)
+    basic_cnpj = models.CharField(unique=True)
     company_name = models.CharField()
     legal_nature = models.CharField()
     qualification_of_the_person_in_charge = models.CharField()
@@ -18,8 +18,3 @@ class Company(models.Model):
 
     def __str__(self):
         return f'name: {self.name}'
-
-# 'cnpj', 'company_name', 'legal_nature', 
-# 'qualification_of_the_person_in_charge',
-# 'share_company_capital', 'company_size',
-# 'federal_entity_responsible']

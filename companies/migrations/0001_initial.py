@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Company',
             fields=[
                 ('uuid', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
-                ('basic_cpnj', models.CharField(unique=True)),
+                ('basic_cnpj', models.CharField(unique=True)),
                 ('company_name', models.CharField()),
                 ('legal_nature', models.CharField()),
                 ('qualification_of_the_person_in_charge', models.CharField()),

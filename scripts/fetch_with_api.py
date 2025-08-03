@@ -1,17 +1,17 @@
 import os
 import requests
-import gzip
-import ijson
 from dotenv import load_dotenv
 from states.models import State
 from municipalities.models import Municipality
 from districts.models import District
 
+import ijson
+import gzip
 
 def clear_data(data):
     clean_data = []
 
-    for element in ijson.items(data, "item"):
+    for element in data:
         if (
             element["municipio"] != None
             and element["municipio"]["microrregiao"] != None
@@ -32,7 +32,7 @@ def update_database_data(data):
     municipalities_id_saved = []
     districts_id_saved = []
 
-    for element in ijson.items(data, "item"):
+    for element in data:
         state_id = element["municipio"]["microrregiao"]["mesorregiao"]["UF"]["id"]
         municipality_id = element["municipio"]["id"]
         district_id = element["id"]
@@ -97,9 +97,8 @@ def update_database_data(data):
 def run():
     load_dotenv()
 
-    API_URL = os.getenv("BASE_API_URL") + "distritos/"
-    response = requests.get(API_URL, stream=True, headers={"Accept-Encoding": "gzip"})
+    API_URL = os.getenv("API_URL")
+    response = requests.get(API_URL).json()
 
-    with gzip.GzipFile(fileobj=response.raw) as decompressed_data:
-        clean_data = clear_data(decompressed_data)
-        update_database_data(clean_data)
+    clean_data = clear_data(response)
+    update_database_data(clean_data)
