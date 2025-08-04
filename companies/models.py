@@ -17,4 +17,4 @@ class Company(models.Model):
         db_table = 'company_federal_revenue'
 
     def __str__(self):
-        return f'name: {self.name}'
+        return f'name: {self.company_name}'
