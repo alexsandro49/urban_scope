@@ -1,9 +1,70 @@
+:root {
+    --color-charcoal: #273f4f;
+    --color-isabelline: #efeeea;
+}
+
 body {
-    background-color: #27374D;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-charcoal);
     width: 100vw;
     height: 100vh;
 }
 
+h1,
+p {
+    text-align: center;
+}
+
 h1 {
-    color: #DDE6ED;
+    margin: 1.2em 0 0.1em 0;
+}
+
+div {
+    background-color: var(--color-isabelline);
+    border-radius: 2em;
+    width: 80%;
+    height: 38%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3em;
+    box-sizing: border-box;
+}
+
+.my-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    box-sizing: border-box;
+    width: 80%;
+    height: 70%;
+}
+
+.my-form input {
+    width: 100%;
+    height: 15%;
+    border: 1px solid var(--color-charcoal);
+    margin-bottom: 0.5em;
+    padding: 1em;
+}
+
+.my-form label {
+    margin-bottom: 0.1em;
+}
+
+button {
+    width: 100%;
+    height: 15%;
+    background-color: var(--color-charcoal);
+    border-radius: 0.8em;
+    border: none;
+    color: var(--color-isabelline);
+    align-self: center;
+    margin-top: 0.1em;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
 }

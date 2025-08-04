@@ -1,4 +1,6 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
-def hello(request):
-    return HttpResponse('Hellor World')
+@login_required(login_url='/')
+def list_view(request):
+    return render(request, 'states.html')

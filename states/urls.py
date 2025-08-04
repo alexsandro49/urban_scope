@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'states'
+
 urlpatterns = [
-    path('', views.hello)
+    path('', views.list_view, name='list')
 ]

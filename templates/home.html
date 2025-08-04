@@ -9,6 +9,18 @@
     <title>Urban Scope</title>
 </head>
 <body>
-    <h1>Urban Scope</h1>
+    <div>
+        <h1>Urban Scope</h1>
+        <p>Faça login para acessar o sistema</p>
+        <form class="my-form" action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+
+            <label for="{{form.username.id_for_label}}">Usuário:</label>
+            {{ form.username }}
+            <label for="{{form.password.id_for_label}}">Senha:</label>
+            {{ form.password }}
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
 </body>
 </html>
