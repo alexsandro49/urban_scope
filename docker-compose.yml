@@ -1,5 +1,5 @@
 services:
-  postgres:
+  db:
     image: postgres:17.5-alpine
     container_name: urban_scope_db
     restart: always
@@ -10,6 +10,27 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     ports:
-      - ${DATABASE_PORT}:5432
+      - ${DATABASE_PORT}:${DATABASE_PORT}
     volumes:
         - ~/Documents/postgres-data:/var/lib/postgresql/data
+
+  django-web:
+    build: .
+    container_name: django-docker
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+
+      COMPRESSED_FILE_NAME: ${COMPRESSED_FILE_NAME}
+      CSV_FILE_NAME: ${CSV_FILE_NAME}
+      CSV_FILE_URL: ${CSV_FILE_URL}
+      API_URL: ${API_URL}
+    env_file:
+      - .env
