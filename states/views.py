@@ -1,10 +1,23 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from .models import State
 
 @login_required(login_url='/')
-def list_view(request):
-    states = State.objects.all()[:10]
+def list_view(request, page_number=1): 
+    states = State.objects.all().order_by('api_id')
     columns = ['apid_id', 'acronym', 'name']
 
-    return render(request, 'states.html', {'data': states, 'columns': columns})
+    paginator = Paginator(states, 10)
+
+    if page_number > paginator.num_pages:
+        page_number = 1
+
+    return render(request, 'states.html', {
+        'data': states, 'columns': columns, 
+        'paginator': paginator.get_page(page_number),
+        'first_page': 1,
+        'current_page': page_number,
+        'last_page': paginator.num_pages
+        }
+    )

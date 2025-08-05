@@ -60,28 +60,40 @@ th {
     font-weight: bold;
 }
 
+th {
+    background-color: var(--color-charcoal);
+    color: var(--color-isabelline);
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+th:first-child {
+    border-top-left-radius: 1.3em;
+    width: 15%;
+}
+
+th:last-child {
+    border-top-right-radius: 1.3em;
+}
+
 tr:nth-child(even) {
-  background-color: #dddddd;
+    background-color: #dddddd;
 }
 
 td {
     text-align: center;
 }
 
-div {
-    align-self: start;
-    margin-left: 1em;
-    margin-bottom: 0.8em;
-    height: 5%;
-}
-
-input, button, select {
+input,
+button,
+select {
     height: 100%;
     border-radius: 0.5em;
 }
 
 input {
     padding-left: 1em;
+    font-size: 1em;
 }
 
 button {
@@ -89,6 +101,69 @@ button {
     font-weight: bold;
 }
 
-button:hover {
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 5%;
+    width: 94vw;
+    margin-bottom: 0.5em;
+}
+
+.options>div {
+    display: flex;
+    height: 100%;
+    width: 50%;
+}
+
+.filter {
+    gap: 0.1em
+}
+
+.pagination {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    justify-content: right;
+    gap: 0.1em;
+}
+
+.pagination>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-isabelline);
+    width: 3em;
+    height: 100%;
+    border-radius: 0.4em;
+    color: var(--color-charcoal);
+}
+
+.pagination .disabled-button {
+    background-color: #efeeeabe;
+}
+
+.pagination div {
     cursor: pointer;
+}
+
+select {
+    font-size: 1em;
+    text-align: center;
+}
+
+@media screen and (min-width: 430px) and (min-height: 932px) and (max-width: 600px) {
+    .options {
+        flex-direction: column;
+        margin-bottom: 1em;
+    }
+
+    .pagination {
+        justify-content: left;
+        margin-top: 0.5em;
+    }
+
+    th:first-child {
+        font-size: 1em;
+    }   
 }

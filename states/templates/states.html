@@ -10,14 +10,50 @@
 {% endblock %}
 
 {% block table_filter %}
-    <div>
-        <select name="" id="">
-            {% for column in columns %}
-                <option value={{ column }}>{{ column }}</option>
-            {% endfor %}
-        </select>
-        <input placeholder="Digite o valor do filtro">
-        <button>FILTRAR</button>
+    <div class="options">
+        <div class="filter">
+            <select>
+                {% for column in columns %}
+                    <option value={{ column }}>{{ column }}</option>
+                {% endfor %}
+            </select>
+            <input placeholder="Digite o valor do filtro">
+            <button>FILTRAR</button>
+        </div>
+
+        <div class="pagination">
+            {% if current_page > 2 %}
+                <div>
+                    <a href="{% url 'states:list' current_page|add:'-1' %}"><</a>
+                </div>
+            {% elif current_page > 1 %}
+                <div>
+                    <a href="{% url 'states:list' 1 %}"><<</a>
+                </div>
+            {% else %}
+                <div class="disabled-button">
+                    <a><<</a>
+                </div>
+            {% endif %}
+    
+            <div>
+                <a>{{ current_page }}</a>
+            </div>
+            
+            {% if current_page < last_page|add:'-1' %}
+                <div>
+                    <a href="{% url 'states:list' current_page|add:'1' %}">></a>
+                </div>
+            {% elif current_page < last_page %}
+                <div>
+                    <a href="{% url 'states:list' last_page %}">>></a>
+                </div>
+            {% else %}
+                <div class="disabled-button">
+                    <a href="{% url 'states:list' current_page|add:'1' %}">>></a>
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 
@@ -28,7 +64,7 @@
         {% endfor %}
     </tr>
 
-    {% for state in data %}
+    {% for state in paginator.object_list %}
         <tr>
             <td>{{ state.api_id }}</td>
             <td>{{ state.acronym }}</td>
