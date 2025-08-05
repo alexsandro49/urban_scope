@@ -1,0 +1,19 @@
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--color-isabelline);
+    width: 100vw;
+    height: 8vh;
+}
+
+a {
+    font-weight: bold;
+    color: var(--color-charcoal);
+    text-decoration: none;
+}
+
+h1 {
+    color: white;
+}
+
