@@ -7,7 +7,7 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
 
 ## 📸 Preview
 
-![Imagem do projeto em execução](https://github.com/alexsandro49/urban_scope/blob/main/placeholder.png)
+![Imagem do projeto em execução](https://github.com/alexsandro49/urban_scope/blob/main/screenshot-1.png)
 
 ---
 
@@ -66,22 +66,25 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
    ```
    docker compose up -d
    ```
+5. Execute os scripts para carregar os dados no banco.
 
 ## Como executar os scripts:
 1. Script para carregar os dados geográficos:
    ```
    docker compose exec django-web python manage.py runscript fetch_with_api
    ```
-2. Script para carregar os dados geográficos:
+2. Script para carregar os dados das empresas:
    ```
    docker compose exec django-web python manage.py runscript fetch_with_csv
    ```
-2. Script para carregar os dados geográficos (com parâmetro):
+3. Script para carregar os dados das empresas (com parâmetro):
    ```
    docker compose exec django-web python manage.py runscript fetch_with_csv --script-args --batch-size=value
    ```
 
 #### Para a exibição dos dados das empresas, é necessario adicionar o arquivo [Empresas0.zip](https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/2025-05/Empresas0.zip) na raiz do projeto.
+
+#### A execução do segundo script é consideravelmente pesada, visto a quantidade de dados que é processada (~1GB), por padrão o algoritmo processa o arquivo em pedaços de 100k, utilize o parâmetro opcional para indicar valores menores, para contornar possíveis travamentos durante a execução.
 
 #### O projeto estará disponível em http://localhost:8000/
 
