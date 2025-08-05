@@ -20,8 +20,21 @@
         <a href={% url 'municipalities:list' %}>Municípios</a>
         <a href={% url 'districts:list' %}>Distritos</a>
         <a href={% url 'companies:list' %}>Empresas</a>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %} 
+            <button class="logout-button">LOGOUT</button>
+        </form>
     </nav>
-    {% block content %}
+
+    {% block table_name %}
     {% endblock %}
+
+    {% block table_filter %}
+    {% endblock %}
+
+    <table>
+        {% block content %}
+        {% endblock %}
+    </table>
 </body>
 </html>

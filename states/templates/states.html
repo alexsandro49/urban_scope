@@ -5,11 +5,34 @@
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
 
-{% block content %}
-    <h1>List states</h1>
+{% block table_name %}
+    <h1>ESTADOS</h1>
+{% endblock %}
 
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %} 
-        <button>LOGOUT</button>
-    </form>
+{% block table_filter %}
+    <div>
+        <select name="" id="">
+            {% for column in columns %}
+                <option value={{ column }}>{{ column }}</option>
+            {% endfor %}
+        </select>
+        <input placeholder="Digite o valor do filtro">
+        <button>FILTRAR</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <tr>
+        {% for column in columns %}
+            <th>{{ column }}</th>
+        {% endfor %}
+    </tr>
+
+    {% for state in data %}
+        <tr>
+            <td>{{ state.api_id }}</td>
+            <td>{{ state.acronym }}</td>
+            <td>{{ state.name }}</td>
+        </tr>
+    {% endfor %}
 {% endblock %}
