@@ -34,3 +34,7 @@ services:
       API_URL: ${API_URL}
     env_file:
       - .env
+    volumes:
+      - .:/app  # garante hot reload de código e CSS
+    working_dir: /app
+    command: python manage.py runserver 0.0.0.0:8000

@@ -91,6 +91,7 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
 - [API de localidades - IBGE](https://servicodados.ibge.gov.br/api/docs/localidades)
 - [Cadastro Nacional da Pessoa Jurídica - CNPJ](https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/2025-05/)
 - [Dicionário de Dados do Cadastro Nacional da Pessoa Jurídica](https://www.gov.br/receitafederal/dados/cnpj-metadados.pdf)
+- [Fact icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/fact)
 
 ## License
 - [MIT](https://github.com/alexsandro49/pizz-app/blob/main/LICENSE)

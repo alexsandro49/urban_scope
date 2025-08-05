@@ -1,3 +1,8 @@
+:root {
+    --color-charcoal: #273f4f;
+    --color-isabelline: #efeeea;
+}
+
 * {
     padding: 0;
     margin: 0;
