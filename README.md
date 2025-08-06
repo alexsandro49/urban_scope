@@ -62,13 +62,20 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
    ```
 3. Prepare as variáveis de ambiente:
    ```
-   cp ./.env.example ./.env
+   cp ./.env.example ./.env   ```
+4. Para a exibição dos dados das empresas, é necessario adicionar este arquivo na raiz do projeto.
    ```
-4. Execute o projeto utilizando o docker compose:
+   https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/2025-05/Empresas0.zip
+   ```
+5. Execute o projeto utilizando o docker compose:
    ```
    docker compose up -d
    ```
-5. Execute os scripts para carregar os dados no banco.
+6. Aplique as migrações no banco de dados:
+   ```
+   docker compose exec django-web python manage.py migrate
+   ```
+7. Execute os scripts para carregar os dados no banco.
 
 ## Como executar os scripts:
 1. Script para carregar os dados geográficos:
@@ -84,11 +91,24 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
    docker compose exec django-web python manage.py runscript fetch_with_csv --script-args --batch-size=value
    ```
 
-#### Para a exibição dos dados das empresas, é necessario adicionar o arquivo [Empresas0.zip](https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/2025-05/Empresas0.zip) na raiz do projeto.
-
 #### A execução do segundo script é consideravelmente pesada, visto a quantidade de dados que é processada (~1GB), por padrão o algoritmo processa o arquivo em pedaços de 100k, utilize o parâmetro opcional para indicar valores menores, para contornar possíveis travamentos durante a execução.
 
 #### O projeto estará disponível em http://localhost:8000/
+
+## 🖥️ Hardware de teste
+O projeto foi desenvolvido e testado no seguinte ambiente:
+- **Processador:** AMD Ryzen 5 7535HS (6 núcleos, 12 threads)
+- **Memória RAM:** 16 GB DDR5
+- **Armazenamento:** SSD NVMe 500 GB
+- **Sistema Operacional:** Ubuntu 24.04 LTS
+- **Docker:** 28.3.3
+- **Python:** 3.13.5
+- **PostgreSQL:** 17.5
+
+## 📈 Resultados
+Durante os testes:
+- **Carregamento de dados geográficos (API IBGE):** ~2 minutos.
+- **Carregamento de dados das empresas (~1GB, batch 100k):** ~6 minutos.
 
 ## Referências
 - [Django documentation](https://docs.djangoproject.com/en/5.2)
