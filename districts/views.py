@@ -41,6 +41,7 @@ def list_view(request):
 
     paginator = Paginator(districts, 10)
     page_obj = paginator.get_page(page_number)
+    empty_rows = 10 - len(districts)
 
 
     return render(request, 'districts.html', {
@@ -48,6 +49,7 @@ def list_view(request):
         'paginator': page_obj,
         'first_page': 1,
         'current_page': page_obj.number,
-        'last_page': paginator.num_pages
+        'last_page': paginator.num_pages,
+        'empty_rows': range(empty_rows)
         }
     )

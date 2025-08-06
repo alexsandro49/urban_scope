@@ -58,16 +58,32 @@
             <th>{{ column|upper }}</th>
         {% endfor %}
     </tr>
+    
+    {% with total=paginator.object_list|length %}
+        {% for company in paginator.object_list %}
+            <tr>
+                <td>{{ company.basic_cnpj }}</td>
+                <td>{{ company.company_name }}</td>
+                <td>{{ company.legal_nature }}</td>
+                <td>{{ company.qualification_of_the_person_in_charge }}</td>
+                <td>{{ company.share_company_capital }}</td>
+                <td>{{ company.company_size }}</td>
+                <td>{{ company.federal_entity_responsible}}</td>         
+            </tr>
+        {% endfor %}
 
-    {% for company in paginator.object_list %}
-        <tr>
-            <td>{{ company.basic_cnpj }}</td>
-            <td>{{ company.company_name }}</td>
-            <td>{{ company.legal_nature }}</td>
-            <td>{{ company.qualification_of_the_person_in_charge }}</td>
-            <td>{{ company.share_company_capital }}</td>
-            <td>{{ company.company_size }}</td>
-            <td>{{ company.federal_entity_responsible}}</td>         
-        </tr>
-    {% endfor %}
+        {% if total < 10 %}
+            {% for i in ""|center:9|slice:":{{ 10|add:-total }}" %}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}

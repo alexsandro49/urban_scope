@@ -15,7 +15,9 @@
             {% csrf_token %}
             <select name="filter-column">
                 {% for column in columns %}
-                    <option value={{ column }}>{{ column }}</option>
+                    {% if column != 'api_id' %}
+                        <option value={{ column }}>{{ column }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
             <input name="filter-value" placeholder="Digite o valor do filtro">
@@ -59,11 +61,23 @@
         {% endfor %}
     </tr>
 
-    {% for state in paginator.object_list %}
-        <tr>
-            <td>{{ state.api_id }}</td>
-            <td>{{ state.acronym }}</td>
-            <td>{{ state.name }}</td>
-        </tr>
-    {% endfor %}
+    {% with total=paginator.object_list|length %}
+        {% for state in paginator.object_list %}
+            <tr>
+                <td>{{ state.api_id }}</td>
+                <td>{{ state.acronym }}</td>
+                <td>{{ state.name }}</td>
+            </tr>
+        {% endfor %}
+
+        {% if total < 10 %}
+            {% for i in empty_rows %}
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}
