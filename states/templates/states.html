@@ -23,36 +23,30 @@
         </form>
 
         <div class="pagination">
-            {% if current_page > 2 %}
-                <div>
-                    <a href="{% url 'states:list' current_page|add:'-1' %}"><</a>
-                </div>
-            {% elif current_page > 1 %}
-                <div>
-                    <a href="{% url 'states:list' 1 %}"><<</a>
-                </div>
+            {% if current_page > 1 %}
+                <div><a href="?page=1"><<</a></div>
             {% else %}
-                <div class="disabled-button">
-                    <a><<</a>
-                </div>
+                <div class="disabled-button"><a><<</a></div>
             {% endif %}
-    
-            <div>
-                <a>{{ current_page }}</a>
-            </div>
-            
-            {% if current_page < last_page|add:'-1' %}
-                <div>
-                    <a href="{% url 'states:list' current_page|add:'1' %}">></a>
-                </div>
-            {% elif current_page < last_page %}
-                <div>
-                    <a href="{% url 'states:list' last_page %}">>></a>
-                </div>
+
+            {% if current_page > 1 %}
+                <div><a href="?page={{ current_page|add:'-1' }}"><</a></div>
             {% else %}
-                <div class="disabled-button">
-                    <a href="{% url 'states:list' current_page|add:'1' %}">>></a>
-                </div>
+                <div class="disabled-button"><a><</a></div>
+            {% endif %}
+
+            <div><a>{{ current_page }}</a></div>
+
+            {% if current_page < last_page %}
+                <div><a href="?page={{ current_page|add:'1' }}">></a></div>
+            {% else %}
+                <div class="disabled-button"><a>></a></div>
+            {% endif %}
+
+            {% if current_page < last_page %}
+                <div><a href="?page={{ last_page }}">>></a></div>
+            {% else %}
+                <div class="disabled-button"><a>>></a></div>
             {% endif %}
         </div>
     </div>
@@ -61,7 +55,7 @@
 {% block content %}
     <tr>
         {% for column in columns %}
-            <th>{{ column }}</th>
+            <th>{{ column|upper }}</th>
         {% endfor %}
     </tr>
 

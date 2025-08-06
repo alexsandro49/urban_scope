@@ -5,11 +5,69 @@
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
 
-{% block content %}
-    <h1>List companies</h1>
+{% block table_name %}
+    <h1>EMPRESAS</h1>
+{% endblock %}
 
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %} 
-        <button>LOGOUT</button>
-    </form>
+{% block table_filter %}
+    <div class="options">
+        <form class="filter" method="post">
+            {% csrf_token %}
+            <select name="filter-column">
+                {% for column in columns %}
+                    <option value={{ column }}>{{ column }}</option>
+                {% endfor %}
+            </select>
+            <input name="filter-value" placeholder="Digite o valor do filtro">
+            <button type="submit">FILTRAR</button>
+        </form>
+
+        <div class="pagination">
+            {% if current_page > 1 %}
+                <div><a href="?page=1"><<</a></div>
+            {% else %}
+                <div class="disabled-button"><a><<</a></div>
+            {% endif %}
+
+            {% if current_page > 1 %}
+                <div><a href="?page={{ current_page|add:'-1' }}"><</a></div>
+            {% else %}
+                <div class="disabled-button"><a><</a></div>
+            {% endif %}
+
+            <div><a>{{ current_page }}</a></div>
+
+            {% if current_page < last_page %}
+                <div><a href="?page={{ current_page|add:'1' }}">></a></div>
+            {% else %}
+                <div class="disabled-button"><a>></a></div>
+            {% endif %}
+
+            {% if current_page < last_page %}
+                <div><a href="?page={{ last_page }}">>></a></div>
+            {% else %}
+                <div class="disabled-button"><a>>></a></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <tr>
+        {% for column in columns %}
+            <th>{{ column|upper }}</th>
+        {% endfor %}
+    </tr>
+
+    {% for company in paginator.object_list %}
+        <tr>
+            <td>{{ company.basic_cnpj }}</td>
+            <td>{{ company.company_name }}</td>
+            <td>{{ company.legal_nature }}</td>
+            <td>{{ company.qualification_of_the_person_in_charge }}</td>
+            <td>{{ company.share_company_capital }}</td>
+            <td>{{ company.company_size }}</td>
+            <td>{{ company.federal_entity_responsible}}</td>         
+        </tr>
+    {% endfor %}
 {% endblock %}

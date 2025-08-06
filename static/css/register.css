@@ -16,6 +16,7 @@ div {
     background-color: var(--color-isabelline);
     border-radius: 2em;
     width: 80%;
+    max-width: 500px;
     height: 45%;
     display: flex;
     align-items: center;

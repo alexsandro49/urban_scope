@@ -35,6 +35,6 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/app  # garante hot reload de código e CSS
+      - .:/app
     working_dir: /app
     command: python manage.py runserver 0.0.0.0:8000

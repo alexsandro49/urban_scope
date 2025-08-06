@@ -7,7 +7,9 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
 
 ## 📸 Preview
 
-![Imagem do projeto em execução](https://github.com/alexsandro49/urban_scope/blob/main/screenshot-1.png)
+![Imagem da tela de login](https://github.com/alexsandro49/urban_scope/blob/main/screenshot-1.png)
+![Imagem da tela de registro](https://github.com/alexsandro49/urban_scope/blob/main/screenshot-2.png)
+![Imagem do projeto em execução](https://github.com/alexsandro49/urban_scope/blob/main/screenshot-3.png)
 
 ---
 
