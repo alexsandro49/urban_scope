@@ -4,9 +4,16 @@ from django.core.paginator import Paginator
 from .models import State
 
 @login_required(login_url='/')
-def list_view(request, page_number=1): 
-    states = State.objects.all().order_by('api_id')
-    columns = ['apid_id', 'acronym', 'name']
+def list_view(request, page_number=1):
+    columns = ['api_id', 'acronym', 'name']
+
+    filter_column = request.POST.get("filter-column")
+    filter_value = request.POST.get("filter-value")
+
+    if filter_column in columns and filter_value:
+        states = State.objects.filter(**{f"{filter_column}__icontains": filter_value}).order_by('api_id')
+    else:
+        states = State.objects.all().order_by('api_id')
 
     paginator = Paginator(states, 10)
 

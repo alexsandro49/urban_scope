@@ -11,15 +11,16 @@
 
 {% block table_filter %}
     <div class="options">
-        <div class="filter">
-            <select>
+        <form class="filter" method="post">
+            {% csrf_token %}
+            <select name="filter-column">
                 {% for column in columns %}
                     <option value={{ column }}>{{ column }}</option>
                 {% endfor %}
             </select>
-            <input placeholder="Digite o valor do filtro">
-            <button>FILTRAR</button>
-        </div>
+            <input name="filter-value" placeholder="Digite o valor do filtro">
+            <button type="submit">FILTRAR</button>
+        </form>
 
         <div class="pagination">
             {% if current_page > 2 %}

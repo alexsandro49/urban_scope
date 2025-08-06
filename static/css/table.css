@@ -110,7 +110,7 @@ button {
     margin-bottom: 0.5em;
 }
 
-.options>div {
+.options>div, .options>form {
     display: flex;
     height: 100%;
     width: 50%;
