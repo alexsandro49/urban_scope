@@ -73,7 +73,7 @@
         {% endfor %}
 
         {% if total < 10 %}
-            {% for i in ""|center:9|slice:":{{ 10|add:-total }}" %}
+            {% for i in empty_rows %}
                 <tr>
                     <td>&nbsp;</td>
                     <td></td>

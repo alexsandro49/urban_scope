@@ -38,7 +38,7 @@ def list_view(request, page_number=1):
 
     paginator = Paginator(states, 10)
     page_obj = paginator.get_page(page_number)
-    empty_rows = 10 - len(states)
+    empty_rows = 10 - len(page_obj)
 
     return render(request, 'states.html', {
         'columns': columns, 

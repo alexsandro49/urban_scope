@@ -72,7 +72,7 @@ th:last-child {
     border-top-right-radius: 1.3em;
 }
 
-tr:nth-child(even) {
+tr:nth-child(odd) {
     background-color: #dddddd;
 }
 

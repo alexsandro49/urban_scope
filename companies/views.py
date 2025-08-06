@@ -39,12 +39,14 @@ def list_view(request):
 
     paginator = Paginator(companies, 10)
     page_obj = paginator.get_page(page_number)
+    empty_rows = 10 - len(page_obj)
 
     return render(request, 'companies.html', {
         'columns': columns, 
         'paginator': page_obj,
         'first_page': 1,
         'current_page': page_obj.number,
-        'last_page': paginator.num_pages
+        'last_page': paginator.num_pages,
+        'empty_rows': empty_rows
         }
     )
