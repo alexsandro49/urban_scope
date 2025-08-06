@@ -12,6 +12,7 @@ def list_view(request, page_number=1):
 
     if filter_column in columns and filter_value:
         states = State.objects.filter(**{f"{filter_column}__icontains": filter_value}).order_by('api_id')
+        page_number = 1
     else:
         states = State.objects.all().order_by('api_id')
 
@@ -21,7 +22,7 @@ def list_view(request, page_number=1):
         page_number = 1
 
     return render(request, 'states.html', {
-        'data': states, 'columns': columns, 
+        'columns': columns, 
         'paginator': paginator.get_page(page_number),
         'first_page': 1,
         'current_page': page_number,

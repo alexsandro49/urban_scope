@@ -56,15 +56,11 @@ table {
 }
 
 th {
-    color: var(--color-charcoal);
-    font-weight: bold;
-}
-
-th {
     background-color: var(--color-charcoal);
     color: var(--color-isabelline);
     font-size: 1.2em;
     font-weight: bold;
+    height: 10%;
 }
 
 th:first-child {
@@ -143,7 +139,7 @@ button {
     background-color: #efeeeabe;
 }
 
-.pagination div {
+.pagination div:hover, button:hover {
     cursor: pointer;
 }
 
