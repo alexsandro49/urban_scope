@@ -62,7 +62,8 @@ O objetivo é demonstrar boas práticas na criação de interfaces modernas e re
    ```
 3. Prepare as variáveis de ambiente:
    ```
-   cp ./.env.example ./.env   ```
+   cp ./.env.example ./.env
+   ```
 4. Para a exibição dos dados das empresas, é necessario adicionar este arquivo na raiz do projeto.
    ```
    https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/2025-05/Empresas0.zip
